@@ -2,7 +2,7 @@
 
 <h1 align="center">Getting Started</h1>
 
-The mikrocms is recommended to be run with the built-up [backend](https://github.com/mikrocms/backend) which is set up and integrated with all default configurations. However, if you want to create it from scratch, follow these steps:
+The mikrocms is recommended to be run with the built-up [mikrocms tools](https://github.com/mikrocms/mikrocms) which is set up and integrated with all default configurations. However, if you want to create it from scratch, follow these steps:
 
 ## Install Express App with Generator
 
