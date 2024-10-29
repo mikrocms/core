@@ -120,7 +120,7 @@ Models contain all methods callable by our service and other models to process q
 Model file:
 
 ```js
-function ({ env, db, schema, model }) {
+function ({ env, db, schema, model, lib }) {
   function migration() {
     // Define migrations here
   }

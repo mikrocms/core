@@ -1,6 +1,7 @@
 const config = require('./config');
 const database = require('./database');
 const schema = require('./schema');
+const libModel = require('./libs/model');
 
 // All models of the module
 const source = {};
@@ -30,7 +31,8 @@ function loadModels() {
             env: config.env,
             db: database.selectDatabase,
             schema: schema.selectSchema(moduleName),
-            model: selectModel(moduleName)
+            model: selectModel(moduleName),
+            lib: libModel
           });
 
           if (typeof modelInstance !== 'object') {
