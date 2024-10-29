@@ -4,24 +4,25 @@ const { Op } = require('sequelize');
  * Generate where queries supported with sequelize operator.
  *
  * @param   object
+ * @param   object
  * @return  object
  */
-function where(queries) {
-  const w = {};
-
+function where(queries, result = {}) {
   for (var op in queries) {
     if (Op[op]) {
-      if (Array.isArray(queries[op]) || queries[op] instanceof Object) {
-        w[Op[op]] = where(queries[op]);
+      if (Array.isArray(queries[op])) {
+        result[Op[op]] = where(queries[op], []);
+      } else if (queries[op] instanceof Object) {
+        result[Op[op]] = where(queries[op], {});
       } else {
-        w[Op[op]] = queries[op];
+        result[Op[op]] = queries[op];
       }
     } else {
-      w[op] = where(queries[op]);
+      result[op] = where(queries[op]);
     }
   }
 
-  return w;
+  return result;
 }
 
 module.exports = {
