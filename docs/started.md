@@ -11,7 +11,7 @@ npm install -g express-generator
 ```
 
 ```sh
-express my-express-app
+express create my-express-app
 ```
 
 ## Modify Express App
