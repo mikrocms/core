@@ -1,24 +1,58 @@
-const { Op } = require('sequelize');
+const { literal, Op } = require('sequelize');
 
 /**
- * Generate where queries supported with sequelize operator.
+ * Generate attributes selected supported with sequelize literal.
+ *
+ * @param   object
+ * @return  object
+ */
+function attributes(selected) {
+  let result;
+
+  if (selected.include || selected.exclude) {
+    result = {};
+
+    for (var s in selected) {
+      result[s] = attributes(selected[s]);
+    }
+  } else {
+    result = [];
+
+    for (var s in selected) {
+      if (selected[s] === null) {
+        result.push(s);
+      } else {
+        result.push([literal(selected[s]), s]);
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Generate where queries supported with sequelize literal and operator.
  *
  * @param   object
  * @param   object
  * @return  object
  */
 function where(queries, result = {}) {
-  for (var op in queries) {
-    if (Op[op]) {
-      if (Array.isArray(queries[op])) {
-        result[Op[op]] = where(queries[op], []);
-      } else if (queries[op] instanceof Object) {
-        result[Op[op]] = where(queries[op], {});
+  if (queries.literal) {
+    result = literal(queries.literal);
+  } else {
+    for (var q in queries) {
+      if (Op[q]) {
+        if (Array.isArray(queries[q])) {
+          result[Op[q]] = where(queries[q], []);
+        } else if (queries[q] instanceof Object) {
+          result[Op[q]] = where(queries[q], {});
+        } else {
+          result[Op[q]] = queries[q];
+        }
       } else {
-        result[Op[op]] = queries[op];
+        result[q] = where(queries[q]);
       }
-    } else {
-      result[op] = where(queries[op]);
     }
   }
 
@@ -26,5 +60,6 @@ function where(queries, result = {}) {
 }
 
 module.exports = {
+  attributes,
   where
 };
