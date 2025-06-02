@@ -50,8 +50,10 @@ function where(queries, result = {}) {
         } else {
           result[Op[q]] = queries[q];
         }
-      } else {
+      } else if (queries[q] instanceof Object && queries[q] !== null) {
         result[q] = where(queries[q]);
+      } else {
+        result[q] = queries[q];
       }
     }
   }
