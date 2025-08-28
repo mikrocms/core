@@ -1,6 +1,6 @@
 {
   "name": "@mikrocms/core",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Package core mikrocms",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,8 @@
     "url": "https://github.com/mikrocms/core/issues"
   },
   "homepage": "https://github.com/mikrocms/core#readme",
-  "dependencies": {
-    "express": "^4.19.2",
-    "sequelize": "^6.37.3"
+  "peerDependencies": {
+    "express": "^5.1.0",
+    "sequelize": "^6.37.7"
   }
 }
